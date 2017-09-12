@@ -49,6 +49,7 @@ public class Main {
         System.out.println("\t5.显示所有商品");
         System.out.println("***********************");
         System.out.println("\n请输入选项或者按0退出.");
+
         Scanner scanner = new Scanner(System.in);
         String choice = scanner.next();
         do {
