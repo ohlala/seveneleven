@@ -5,9 +5,9 @@ public class Main {
 
     public static void main(String[] args) {
         System.out.println("***********************");
-        System.out.println("\t1.商品维护\n");
-        System.out.println("\t2.前台收银\n");
-        System.out.println("\t3.商品管理\n");
+        System.out.println("\t1.商品维护");
+        System.out.println("\t2.前台收银");
+        System.out.println("\t3.商品管理");
         System.out.println("***********************");
 
         System.out.println("\n请输入选项或者按0退出.");
@@ -42,11 +42,11 @@ public class Main {
     public static void maintenancePage(){
         System.out.println("显示商品管理界面\n");
         System.out.println("***********************");
-        System.out.println("\t1.添加商品\n");
-        System.out.println("\t2.删除商品\n");
-        System.out.println("\t3.更改商品\n");
-        System.out.println("\t4.查询商品\n");
-        System.out.println("\t5.显示所有商品\n");
+        System.out.println("\t1.添加商品");
+        System.out.println("\t2.删除商品");
+        System.out.println("\t3.更改商品");
+        System.out.println("\t4.查询商品");
+        System.out.println("\t5.显示所有商品");
         System.out.println("***********************");
         System.out.println("\n请输入选项或者按0退出.");
         Scanner scanner = new Scanner(System.in);
@@ -65,13 +65,19 @@ public class Main {
                     System.exit(1);
                     break;
                 case 1:
-                    maintenancePage();
+                    GoodsPage.addGoodsPage();
                     break;
                 case 2:
-                    checkstandPage();
+                    GoodsPage.deleteGoodsPage();
                     break;
                 case 3:
-                    commodityManagementPage();
+                    GoodsPage.updateGoodsPage();
+                    break;
+                case 4:
+                    GoodsPage.queryGoodsPage();
+                    break;
+                case 5:
+                    GoodsPage.dispalyGoodsPage();
                     break;
             }
         }while (true);
