@@ -1,9 +1,14 @@
+import kun.tools.ScannerChoice;
+
 import java.io.*;
 import java.util.Scanner;
 
 public class Main {
+    public static void main(String[] args){
+       mainPage();
+    }
 
-    public static void main(String[] args) {
+    public static void mainPage(){
         System.out.println("***********************");
         System.out.println("\t1.商品维护");
         System.out.println("\t2.前台收银");
@@ -90,6 +95,49 @@ public class Main {
         System.out.println("\t1.登陆\n");
         System.out.println("\t2.退出\n");
         System.out.println("***********************");
+
+        Scanner scanner = new Scanner(System.in);
+        String choice = scanner.next();
+        do {
+            String regex = "[0-2]";
+            if (!choice.matches(regex)) {
+                System.err.println("????");
+                System.out.println("请重新选择或按0返回上级界面");
+            }
+            int info = Integer.parseInt(choice);
+            switch (info) {
+                case 0:
+                    mainPage();
+                    break;
+                case 1:
+                    boolean flag = false;
+                    for (int count = 3; count > 0; count--){
+                        System.out.println("请输入用户名：");
+                        String name = ScannerChoice.ScannerString();
+                        System.out.println("请输入密码：");
+                        String password = ScannerChoice.ScannerString();
+                        if (flag = true){
+                            GsalePage.shoppingSettlementPage();
+                            break;
+                        }else {
+                            if (count>1)
+                                System.out.println("用户名或密码输入错误！请重新输入！您还有"+(count-1)+"次机会");
+                            else{
+                                System.out.println("用户名或密码输入错误！");
+                                System.out.println("--------------------");
+                                System.out.println("您已经退出系统！");
+                                System.exit(1);
+                            }
+                        }
+                    }
+                    break;
+                case 2:
+                    System.out.println("--------------------");
+                    System.out.println("您已经退出系统！");
+                    System.exit(1);
+                    break;
+            }
+        }while(true);
     }
 
     public static void commodityManagementPage(){
@@ -98,4 +146,5 @@ public class Main {
         System.out.println("\t2.收银员管理\n");
         System.out.println("***********************");
     }
+
 }
