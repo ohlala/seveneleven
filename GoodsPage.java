@@ -1,4 +1,5 @@
 import kun.entity.Goods;
+import kun.entity.dao.GoodsDao;
 import kun.tools.ScannerChoice;
 
 import java.util.Scanner;
@@ -15,8 +16,10 @@ public class GoodsPage {
         double goodPrice = ScannerChoice.ScannerInfo();
         System.out.println("添加商品数量：");
         int goodNumber = ScannerChoice.ScannerInt();
-        Goods goods = new Goods(goodName, goodPrice, goodNumber);
         //加入数据库
+        Goods goods = new Goods(goodName, goodPrice, goodNumber);
+        boolean bool = new GoodsDao().addGoods(goods);
+
         System.out.println(goods);
         System.out.println("是否继续（y/n）：");
         String flag = ScannerChoice.ScannerString();

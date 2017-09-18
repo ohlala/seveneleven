@@ -26,14 +26,20 @@ public class GsalePage {
                 }
             }while (true);
             System.out.println("共计："+count+"元");
+
             System.out.println("请输入实际金额：");
-            //?/
-            System.out.println("找零：");
+            double total = ScannerChoice.ScannerInfo();
+            while (total<count){
+                System.out.println("金额不足！请重新输入实际金额：");
+                total = ScannerChoice.ScannerInfo();
+            }
+            System.out.println("找零："+(total - count) +"元。谢谢光临！");
+
             System.out.println("是否继续收银？（y/n）");
             String flag = ScannerChoice.ScannerString();
             if (flag.equals("n")){
-                //break;
-                //回到？/？
+                System.out.println("退出收银！");
+                Main.mainPage();
             }
         }while (true);
     }
