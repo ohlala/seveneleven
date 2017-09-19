@@ -18,12 +18,7 @@ public class GoodsPage {
         int goodNumber = ScannerChoice.ScannerInt();
         //加入数据库
         Goods goods = new Goods(goodName, goodPrice, goodNumber);
-        boolean bool = new GoodsDao().addGoods(goods);
-        if (bool){
-            System.out.println("插入数据成功");
-        }else {
-            System.out.println("插入数据失败");
-        }
+        new GoodsDao().addGoods(goods);
 
         System.out.println("是否继续（y/n）：");
         String flag = ScannerChoice.ScannerString();
@@ -37,12 +32,12 @@ public class GoodsPage {
         System.out.println("执行删除商品操作：");
         System.out.println("输入删除商品名称");
         String goodName = ScannerChoice.ScannerString();
-        System.out.println("商品名称\t商品价格\t商品数量");
-        //数据库操作
+        GoodsDao.query(goodName);
+
         System.out.println("是否确定删除（y/n）：");
         String flag = ScannerChoice.ScannerString();
         if ("y".equals(flag) ){
-            //数据库操作
+            GoodsDao.delete(goodName);
         }
         System.out.println("是否继续（y/n）：");
         String flag2 = ScannerChoice.ScannerString();
