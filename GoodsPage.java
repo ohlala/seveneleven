@@ -19,8 +19,12 @@ public class GoodsPage {
         //加入数据库
         Goods goods = new Goods(goodName, goodPrice, goodNumber);
         boolean bool = new GoodsDao().addGoods(goods);
+        if (bool){
+            System.out.println("插入数据成功");
+        }else {
+            System.out.println("插入数据失败");
+        }
 
-        System.out.println(goods);
         System.out.println("是否继续（y/n）：");
         String flag = ScannerChoice.ScannerString();
         if ("y".equals(flag) ){

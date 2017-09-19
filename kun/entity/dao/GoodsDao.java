@@ -1,8 +1,10 @@
 package kun.entity.dao;
 
 import kun.entity.Goods;
-
-import java.sql.*;
+import kun.tools.JDBCUtil;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 /**
  * Created by Administrator on 2017/9/18 0018.
@@ -10,24 +12,27 @@ import java.sql.*;
 public class GoodsDao
 {
     public boolean addGoods(Goods good){
+        int count = 0;
+        Connection conn = null;
+        PreparedStatement ps = null;
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection conn = DriverManager.getConnection("sql://localhost:3306/seveneleven","root","wwww");
-            String sql = "insert into goods (gid, gname, gprice, gnum) values (?,?,?,?)";
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setObject(1,5);
-            ps.setObject(2,"shi");
-            ps.setObject(3,"0.5");
-            ps.setObject(4,6);
-            ps.execute();
+            conn = JDBCUtil.getconn();
+            String sql = "insert into goods (gname, gprice, gnum) values (?,?,?)";
+            ps = conn.prepareStatement(sql);
+            ps.setObject(1,good.getGname());
+            ps.setObject(2,good.getGprice());
+            ps.setObject(3,good.getGnumber());
+            count = ps.executeUpdate();
             System.out.println("插入一行记录");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         } catch (SQLException e) {
             e.printStackTrace();
+        }finally {
+            JDBCUtil.close(ps, conn);
         }
-
-        return true;
+        if (count>0){
+            return true;
+        }
+        return false;
 
     }
 }
