@@ -63,7 +63,7 @@ public class GoodsDao{
         return;
     }
 
-    //3、查询商品
+    //3、查询单个商品
     public static boolean query(String gname) {
         Connection conn = null;
         PreparedStatement ps = null;
@@ -75,19 +75,13 @@ public class GoodsDao{
             ps = conn.prepareStatement(sql);
             ps.setObject(1,gname);
             rs = ps.executeQuery();
-
-            if (rs.next()){
+            if (rs.next()) {
                 exist = true;
-                System.out.println("商品名称\t商品价格\t商品数量");
-                System.out.println(rs.getString("gname")+"\t\t\t"+rs.getDouble("gprice")
-                        + "\t"+rs.getInt("gnum"));
-                while (rs.next())
-                    System.out.println(rs.getString("gname")+"\t\t\t"+rs.getDouble("gprice")
-                    + "\t"+rs.getInt("gnum"));
+                System.out.println("商品名称\t\t商品价格\t商品数量");
+                System.out.printf("%-15s %8.2f %8d\n", rs.getString("gname"), rs.getDouble("gprice"), rs.getInt("gnum"));
             }else {
                 System.out.println("不存在该商品！");
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }finally {
@@ -111,20 +105,23 @@ public class GoodsDao{
                 case 1:
                     sql = "UPDATE goods SET gname = ? WHERE  gname = ?";
                     System.out.println("请输入修改后的名称：");
+                    ps = conn.prepareStatement(sql);
                     ps.setObject(1, ScannerChoice.ScannerString());
                     break;
                 case 2:
                     sql = "UPDATE goods SET gprice = ? WHERE  gname = ?";
                     System.out.println("请输入修改后的价格：");
+                    ps = conn.prepareStatement(sql);
                     ps.setObject(1, ScannerChoice.ScannerInfo());
                     break;
                 case 3:
                     sql = "UPDATE goods SET gnum = ? WHERE  gname = ?";
                     System.out.println("请输入修改后的数量：");
+                    ps = conn.prepareStatement(sql);
                     ps.setObject(1, ScannerChoice.ScannerInt());
                     break;
             }
-            ps = conn.prepareStatement(sql);
+
             ps.setObject(2, gname);
             if (ps.executeUpdate()>0)
                 System.out.println("修改数据库成功！");
@@ -134,5 +131,78 @@ public class GoodsDao{
             JDBCUtil.close(ps, conn);
         }
     }
+    //5.查询并排序
+    public static void queryGoods(int info){
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = new String();
+        try {
+            conn = JDBCUtil.getconn();
+            switch (info){
+                case 0:
+                    MainPage.maintenancePage();
+                    break;
+                case 1:
+                    sql = "SELECT * FROM goods ORDER BY gnum";
+                    break;
+                case 2:
+                    sql = "SELECT * FROM goods ORDER BY gprice";
+                    break;
+                case 3:
+                    //模糊搜索？？
+                    break;
+            }
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            printrs(rs);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            JDBCUtil.close(rs, ps, conn);
+        }
+    }
+    public static void dispaly(){
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = new String();
+        try {
+            conn = JDBCUtil.getconn();
+            sql = "SELECT * FROM goods ORDER BY gname";
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            printrs(rs);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            JDBCUtil.close(rs, ps, conn);
+        }
+    }
+
+
+    public static void printrs(ResultSet rs) throws SQLException {
+        if (rs.next()){
+            System.out.println("商品名称\t\t商品价格\t商品数量\t  备注");
+            System.out.printf("%-15s %8.2f %8d",rs.getString("gname"),rs.getDouble("gprice"),rs.getInt("gnum"));
+            if(rs.getInt("gnum")<10){
+                System.out.printf("\t\t该商品已经不足10件！");
+            }
+            System.out.println();
+            while (rs.next()){
+                System.out.printf("%-15s %8.2f %8d",rs.getString("gname"),rs.getDouble("gprice"),rs.getInt("gnum"));
+                if(rs.getInt("gnum")<10){
+                    System.out.printf("\t\t该商品已经不足10件！");
+                }
+                System.out.println();
+            }
+            System.out.printf("按任意键返回。");
+            ScannerChoice.ScannerString();
+        }else {
+            System.out.println("不存在该商品！");
+        }
+    }
+
 }
 
