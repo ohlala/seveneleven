@@ -1,8 +1,4 @@
 package kun.tools;
-
-
-
-
 import java.sql.*;
 
 /**

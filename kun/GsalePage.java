@@ -1,3 +1,5 @@
+package kun;
+
 import kun.tools.ScannerChoice;
 
 /**

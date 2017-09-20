@@ -1,6 +1,6 @@
-import kun.tools.ScannerChoice;
+package kun;
 
-import java.io.*;
+import kun.tools.ScannerChoice;
 import java.util.Scanner;
 
 public class MainPage {

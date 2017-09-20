@@ -40,7 +40,7 @@ public class ScannerChoice {
             Scanner scanner = new Scanner(System.in);
             System.out.println("请输入：");
             String info = scanner.next();
-            String regex = "(([1-9][0-9]*))";
+            String regex = "(([1-9][0-9]*)|0)";
             boolean flag = info.matches(regex);
             if (flag){
                 num = Integer.parseInt(info);

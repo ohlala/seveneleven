@@ -1,3 +1,5 @@
+package kun;
+
 import kun.entity.Goods;
 import kun.entity.dao.GoodsDao;
 import kun.tools.ScannerChoice;
@@ -51,9 +53,11 @@ public class GoodsPage {
         System.out.println("执行修改商品操作：");
         System.out.println("请输入需要修改的商品名称：");
         String goodName = ScannerChoice.ScannerString();
-        System.out.println("选择您要更改的内容：\n0、返回上一级界面；\n1、更改商品名称；\n2、更改商品价格；\n3.更改商品数量；");
-        int info = ScannerChoice.ScannerInt();
-        GoodsDao.updata(info);
+        if (GoodsDao.query(goodName)) {
+            System.out.println("选择您要更改的内容：\n0、返回上一级界面；\n1、更改商品名称；\n2、更改商品价格；\n3.更改商品数量；");
+            int info = ScannerChoice.ScannerInt();
+            GoodsDao.updata(info, goodName);
+        }
         System.out.println("是否继续（y/n）：");
         String flag = ScannerChoice.ScannerString();
         if ("y".equals(flag) ){

@@ -2,11 +2,13 @@ package kun.entity.dao;
 
 import kun.entity.Goods;
 import kun.tools.JDBCUtil;
+import kun.tools.ScannerChoice;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
+import kun.MainPage;
 /**
  * Created by Administrator on 2017/9/18 0018.
  */
@@ -95,35 +97,41 @@ public class GoodsDao{
     }
 
     //4、修改商品 0、返回上一级界面；1、更改商品名称 2、更改商品价格； 3.更改商品数量
-    public static void updata(int info) {
-        switch (info) {
-            case 0:
-                //MainPage.maintenancePage();
-                break;
-            case 1:
-                //GoodsPage.addGoodsPage();
-                break;
-            case 2:
-                //GoodsPage.deleteGoodsPage();
-                break;
-            case 3:
-                //GoodsPage.updateGoodsPage();
-                break;
-        }
+    public static void updata(int info,String gname) {
         Connection conn = null;
         PreparedStatement ps = null;
-        ResultSet rs = null;
-        boolean exist = false;
+        int rs = 0;
+        String sql = new String();
         try {
             conn = JDBCUtil.getconn();
-            String sql = "SELECT * FROM goods WHERE gname = ?";
+            switch (info) {
+                case 0:
+                    MainPage.maintenancePage();
+                    break;
+                case 1:
+                    sql = "UPDATE goods SET gname = ? WHERE  gname = ?";
+                    System.out.println("请输入修改后的名称：");
+                    ps.setObject(1, ScannerChoice.ScannerString());
+                    break;
+                case 2:
+                    sql = "UPDATE goods SET gprice = ? WHERE  gname = ?";
+                    System.out.println("请输入修改后的价格：");
+                    ps.setObject(1, ScannerChoice.ScannerInfo());
+                    break;
+                case 3:
+                    sql = "UPDATE goods SET gnum = ? WHERE  gname = ?";
+                    System.out.println("请输入修改后的数量：");
+                    ps.setObject(1, ScannerChoice.ScannerInt());
+                    break;
+            }
             ps = conn.prepareStatement(sql);
-            ps.setObject(1, gname);
-            rs = ps.executeQuery();
+            ps.setObject(2, gname);
+            if (ps.executeUpdate()>0)
+                System.out.println("修改数据库成功！");
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            JDBCUtil.close(rs, ps, conn);
+            JDBCUtil.close(ps, conn);
         }
     }
 }
