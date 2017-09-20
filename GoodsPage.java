@@ -25,26 +25,26 @@ public class GoodsPage {
         if ("y".equals(flag) ){
             addGoodsPage();
         }else{
-            Main.maintenancePage();
+            MainPage.maintenancePage();
         }
     }
     public static void deleteGoodsPage(){
         System.out.println("执行删除商品操作：");
         System.out.println("输入删除商品名称");
         String goodName = ScannerChoice.ScannerString();
-        GoodsDao.query(goodName);
-
-        System.out.println("是否确定删除（y/n）：");
-        String flag = ScannerChoice.ScannerString();
-        if ("y".equals(flag) ){
-            GoodsDao.delete(goodName);
+        if (GoodsDao.query(goodName)){
+            System.out.println("是否确定删除（y/n）：");
+            String flag = ScannerChoice.ScannerString();
+            if ("y".equals(flag) ){
+                GoodsDao.delete(goodName);
+            }
         }
-        System.out.println("是否继续（y/n）：");
+        System.out.println("是否继续删除其他商品（y/n）：");
         String flag2 = ScannerChoice.ScannerString();
         if ("y".equals(flag2) ){
             deleteGoodsPage();
         }else{
-            Main.maintenancePage();
+            MainPage.maintenancePage();
         }
     }
     public static void updateGoodsPage(){
@@ -53,26 +53,13 @@ public class GoodsPage {
         String goodName = ScannerChoice.ScannerString();
         System.out.println("选择您要更改的内容：\n0、返回上一级界面；\n1、更改商品名称；\n2、更改商品价格；\n3.更改商品数量；");
         int info = ScannerChoice.ScannerInt();
-        switch (info) {
-            case 0:
-                Main.maintenancePage();
-                break;
-            case 1:
-                //GoodsPage.addGoodsPage();
-                break;
-            case 2:
-                //GoodsPage.deleteGoodsPage();
-                break;
-            case 3:
-                //GoodsPage.updateGoodsPage();
-                break;
-        }
+        GoodsDao.updata(info);
         System.out.println("是否继续（y/n）：");
         String flag = ScannerChoice.ScannerString();
         if ("y".equals(flag) ){
             updateGoodsPage();
         }else{
-            Main.maintenancePage();
+            MainPage.maintenancePage();
         }
     }
     public static void queryGoodsPage(){
@@ -85,7 +72,7 @@ public class GoodsPage {
         int info = Integer.parseInt(scanner.next());
         switch (info) {
             case 0:
-                Main.maintenancePage();
+                MainPage.maintenancePage();
                 break;
             case 1:
                 // .addGoodsPage();
@@ -97,7 +84,7 @@ public class GoodsPage {
                 // GoodsPage.updateGoodsPage();
                 break;
         }
-        Main.maintenancePage();
+        MainPage.maintenancePage();
     }
     public static void dispalyGoodsPage(){
         System.out.println("显示所有商品：");
@@ -105,7 +92,7 @@ public class GoodsPage {
         //数据库操作
         System.out.println("按任意键返回上一层：");
         String flag = ScannerChoice.ScannerString();
-        Main.maintenancePage();
+        MainPage.maintenancePage();
         }
 
 }

@@ -62,10 +62,11 @@ public class GoodsDao{
     }
 
     //3、查询商品
-    public static void query(String gname) {
+    public static boolean query(String gname) {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
+        boolean exist = false;
         try {
             conn = JDBCUtil.getconn();
             String sql = "SELECT * FROM goods WHERE gname = ?";
@@ -73,13 +74,16 @@ public class GoodsDao{
             ps.setObject(1,gname);
             rs = ps.executeQuery();
 
-            if (rs != null){
+            if (rs.next()){
+                exist = true;
                 System.out.println("商品名称\t商品价格\t商品数量");
+                System.out.println(rs.getString("gname")+"\t\t\t"+rs.getDouble("gprice")
+                        + "\t"+rs.getInt("gnum"));
                 while (rs.next())
                     System.out.println(rs.getString("gname")+"\t\t\t"+rs.getDouble("gprice")
                     + "\t"+rs.getInt("gnum"));
             }else {
-                System.out.println("不存在该商品！");//////????????
+                System.out.println("不存在该商品！");
             }
 
         } catch (SQLException e) {
@@ -87,12 +91,40 @@ public class GoodsDao{
         }finally {
             JDBCUtil.close(rs, ps, conn);
         }
-        return;
+        return exist;
+    }
+
+    //4、修改商品 0、返回上一级界面；1、更改商品名称 2、更改商品价格； 3.更改商品数量
+    public static void updata(int info) {
+        switch (info) {
+            case 0:
+                //MainPage.maintenancePage();
+                break;
+            case 1:
+                //GoodsPage.addGoodsPage();
+                break;
+            case 2:
+                //GoodsPage.deleteGoodsPage();
+                break;
+            case 3:
+                //GoodsPage.updateGoodsPage();
+                break;
+        }
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        boolean exist = false;
+        try {
+            conn = JDBCUtil.getconn();
+            String sql = "SELECT * FROM goods WHERE gname = ?";
+            ps = conn.prepareStatement(sql);
+            ps.setObject(1, gname);
+            rs = ps.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            JDBCUtil.close(rs, ps, conn);
+        }
     }
 }
-/*
-    //4、修改商品
-    public static int updata() {
 
-    }
-*/

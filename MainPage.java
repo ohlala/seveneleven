@@ -3,7 +3,7 @@ import kun.tools.ScannerChoice;
 import java.io.*;
 import java.util.Scanner;
 
-public class Main {
+public class MainPage {
     public static void main(String[] args){
        mainPage();
     }

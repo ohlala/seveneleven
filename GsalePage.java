@@ -39,7 +39,7 @@ public class GsalePage {
             String flag = ScannerChoice.ScannerString();
             if (flag.equals("n")){
                 System.out.println("退出收银！");
-                Main.mainPage();
+                MainPage.mainPage();
             }
         }while (true);
     }
