@@ -1,5 +1,6 @@
 package kun;
 
+import kun.entity.Salesman;
 import kun.tools.ScannerChoice;
 import java.util.Scanner;
 
@@ -140,11 +141,30 @@ public class MainPage {
         }while(true);
     }
 
-    public static void commodityManagementPage(){
+    public static void commodityManagementPage() {
         System.out.println("***********************");
-        System.out.println("\t1.当日售出商品记录\n");
-        System.out.println("\t2.收银员管理\n");
+        System.out.println("\t1.当日售出商品记录");
+        System.out.println("\t2.收银员管理");
         System.out.println("***********************");
-    }
+        System.out.println("\n请输入选项或者按0返回.");
+        Scanner scanner = new Scanner(System.in);
+        String choice = scanner.next();
+        do {
+            String regex = "[0-2]";
+            if (!choice.matches(regex)) {
+                System.err.println("????");
+                System.out.println("请重新选择或按0返回上级界面");
+            }
+            int info = Integer.parseInt(choice);
+            switch (info) {
+                case 0:
+                    mainPage();
+                    break;
+                case 1:
 
+                case 2:
+                    SalesmanPage.Salesman();
+            }
+        }while (true);
+    }
 }
